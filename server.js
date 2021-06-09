@@ -66,8 +66,15 @@ app.post('/posts', (req, res) => {
 app.post('/posts/:idPosts/comments', (req, res) => {
     console.log('chegou uma requisicao');
     const id = parseInt(req.params.idPosts);
-    let newArray = req.body;
-    comments.push(newArray);
+    let newComment = req.body;
+    newComment.postId = idPosts;
+    if (id === comments.length - 1) {
+        newComment.id = comments[id].length;
+        comments[id].push(newComment);
+    } else {
+        newComment.id = 0;
+        comments.push([newComment]);
+    }
     res.send('chegou o comentario');
 });
 
